@@ -3,7 +3,7 @@
 //  ShigaApp
 //
 //  Created by Nakanishi Toshiaki on 12/04/10.
-//  Copyright 2012年 FURYU CORP. All rights reserved.
+//  Copyright 2012年 TOSHIAKI Nakanishi All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
@@ -13,9 +13,9 @@
 #import "WayPoint.h"
 
 @interface Creep : CCSprite <NSCopying> {
-    int curHp;
-    int moveDuration;
-    int curWaypoint;
+    int _curHp;
+    int _moveDuration;
+    int _curWaypoint;
 }
 
 @property (nonatomic, assign) int hp;
