@@ -6,12 +6,12 @@
 //  Copyright 2012年 TOSHIAKI Nakanishi All rights reserved.
 //
 
-#import "WayPoint.h"
+#import "Waypoint.h"
 
 /*
  敵の進路を表現するクラス.
  */
-@implementation WayPoint
+@implementation Waypoint
 
 - (id) init {
     if ((self = [super init])) {

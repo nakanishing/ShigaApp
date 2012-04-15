@@ -8,9 +8,18 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "Creep.h"
 
 @interface Wave : CCNode {
-    
+    float _spawnRate;
+    int _totalCreeps;
+    Creep *_creepType;
 }
+
+@property (nonatomic) float spawnRate;
+@property (nonatomic) int totalCreeps;
+@property (nonatomic, retain) Creep *creepType;
+
+- (id)initWithCreep:(Creep *)creep SpawnRate:(float)spawnRate TotalCreeps:(int) totalCreeps;
 
 @end

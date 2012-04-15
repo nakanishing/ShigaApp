@@ -10,7 +10,7 @@
 #import "cocos2d.h"
 
 #import "DataModel.h"
-#import "WayPoint.h"
+#import "Waypoint.h"
 
 @interface Creep : CCSprite <NSCopying> {
     int _curHp;
@@ -23,8 +23,8 @@
 @property (nonatomic, assign) int curWaypoint;
 
 - (Creep *)initWithCreep:(Creep *) copyFrom;
-- (WayPoint *)getCurrentWaypoint;
-- (WayPoint *)getNextWaypoint;
+- (Waypoint *)getCurrentWaypoint;
+- (Waypoint *)getNextWaypoint;
 
 @end
 

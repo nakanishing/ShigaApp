@@ -16,7 +16,7 @@
     CCLayer *gameLayer;
     
     NSMutableArray *targets;
-    NSMutableArray *wayPoints;
+    NSMutableArray *waypoints;
     NSMutableArray *waves;
     
     // ジェスチャーを検知する為のクラス
@@ -25,7 +25,7 @@
 
 @property (nonatomic, retain) CCLayer *gameLayer;
 @property (nonatomic, retain) NSMutableArray *targets;
-@property (nonatomic, retain) NSMutableArray *wayPoints;
+@property (nonatomic, retain) NSMutableArray *waypoints;
 @property (nonatomic, retain) NSMutableArray *waves;
 @property (nonatomic, retain) UIPanGestureRecognizer *gestureRecognizer;
 

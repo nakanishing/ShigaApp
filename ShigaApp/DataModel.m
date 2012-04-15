@@ -13,7 +13,7 @@
 
 @synthesize gameLayer;
 @synthesize targets;
-@synthesize wayPoints;
+@synthesize waypoints;
 @synthesize waves;
 @synthesize gestureRecognizer;
 
@@ -39,7 +39,7 @@ static DataModel *sharedContext = nil;
 - (id)init {
     if ((self = [super init])) {
         targets = [[NSMutableArray alloc] init];
-        wayPoints = [[NSMutableArray alloc] init];
+        waypoints = [[NSMutableArray alloc] init];
         waves = [[NSMutableArray alloc] init];
     }
     return self;
@@ -52,8 +52,8 @@ static DataModel *sharedContext = nil;
     [targets release];
     targets = nil;
     
-    [wayPoints release];
-    wayPoints = nil;
+    [waypoints release];
+    waypoints = nil;
     
     [waves release];
     waves = nil;

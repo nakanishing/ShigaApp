@@ -8,9 +8,22 @@
 
 #import <Foundation/Foundation.h>
 #import "cocos2d.h"
+#import "Creep.h"
+#import "Wave.h"
+#import "Waypoint.h"
 
 @interface TutorialScene : CCLayer {
+    CCTMXTiledMap *_tileMap;
+    CCTMXLayer *_background;
     
+    int _currentLevel;
 }
+
+@property (nonatomic, retain) CCTMXTiledMap *tileMap;
+@property (nonatomic, retain) CCTMXLayer *background;
+@property (nonatomic, assign) int currentLevel;
+
++ (id)scene;
+- (void)addWayPoint;
 
 @end

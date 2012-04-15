@@ -31,23 +31,23 @@
     return self;
 }
 
-- (WayPoint *)getCurrentWaypoint {
+- (Waypoint *)getCurrentWaypoint {
     DataModel *m = [DataModel getModel];
-    WayPoint *waypoint = (WayPoint *)[m.wayPoints objectAtIndex:self.curWaypoint];
+    Waypoint *waypoint = (Waypoint *)[m.waypoints objectAtIndex:self.curWaypoint];
     
     return waypoint;
 }
 
-- (WayPoint *)getNextWaypoint {
+- (Waypoint *)getNextWaypoint {
     DataModel *m = [DataModel getModel];
-    int lastWaypoint = m.wayPoints.count;
+    int lastWaypoint = m.waypoints.count;
     
     self.curWaypoint++;
     if (self.curWaypoint > lastWaypoint) {
         self.curWaypoint = lastWaypoint - 1;
     }
     
-    WayPoint *waypoint = (WayPoint *) [m.wayPoints objectAtIndex:self.curWaypoint];
+    Waypoint *waypoint = (Waypoint *) [m.waypoints objectAtIndex:self.curWaypoint];
     
     return waypoint;
 }
