@@ -91,4 +91,51 @@
     wp = nil;
 }
 
+- (void)addTarget {
+    DataModel *m = [DataModel getModel];
+    Wave *wave = [self getCurrentWave];
+    if (wave.totalCreeps < 0) {
+        // [self getNextWave];
+        return;
+    }
+    
+    wave.totalCreeps--;
+    
+    Creep *target = nil;
+    if ((arc4random() % 2) == 0) {
+        target = [FastRedCreep creep];
+    } else {
+        target = [StrongGreenCreep creep];
+    }
+    
+    Waypoint *waypoint = [target getCurrentWaypoint];
+    target.position = waypoint.position;
+    waypoint = [target getNextWaypoint];
+    
+    [self addChild:target z:1];
+    
+    int moveDuration = target.moveDuration;
+    id actionMove = [CCMoveTo actionWithDuration:moveDuration position:waypoint.position];
+    id actionMoveDone = [CCCallFuncN actionWithTarget:self selector:@selector(FollowPath:)];
+    [target runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
+    
+    target.tag = 1;
+    [m.targets addObject:target];
+}
+
+- (void)FollowPath:(id)sender {
+    Creep *creep = (Creep *)sender;
+    Waypoint *waypoint = [creep getNextWaypoint];
+    
+    int moveDuration = creep.moveDuration;
+    id actionMove = [CCMoveTo actionWithDuration:moveDuration position:waypoint.position];
+    id actionMoveDone = [CCCallFuncN actionWithTarget:self selector:@selector(FollowPath:)];
+    [creep stopAllActions];
+    [creep runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
+}
+
+
+
+
+
 @end
