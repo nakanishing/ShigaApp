@@ -56,6 +56,13 @@
     wave = nil;
 }
 
+- (Wave *)getCurrentWave {
+    DataModel *m = [DataModel getModel];
+    Wave *wave = (Wave *)[m.waves objectAtIndex:self.currentLevel];
+    
+    return wave;
+}
+
 - (Wave *)getNextWave {
     DataModel *m = [DataModel getModel];
     
@@ -134,8 +141,64 @@
     [creep runAction:[CCSequence actions:actionMove, actionMoveDone, nil]];
 }
 
+- (void)gameLogic:(ccTime)dt {
+    //DataModel *m = [DataModel getModel];
+    Wave *wave = [self getCurrentWave];
+    
+    static double lastTimeTargetAdded = 0;
+    double now = [[NSDate date] timeIntervalSince1970];
+    if (lastTimeTargetAdded == 0 || now - lastTimeTargetAdded >= wave.spawnRate) {
+        [self addTarget];
+        lastTimeTargetAdded = now;
+    }
+}
 
+- (void)update:(ccTime)dt {
+    
+}
 
+- (CGPoint)boundLayerPos:(CGPoint)newPos {
+    CGSize winSize = [CCDirector sharedDirector].winSize;
+    
+    CGPoint retval = newPos;
+    retval.x = MIN(retval.x, 0);
+    retval.x = MAX(retval.x, (winSize.width - _tileMap.contentSize.width));
+    retval.y = MIN(0, retval.y);
+    retval.y = MAX((winSize.height - _tileMap.contentSize.height), retval.y);
+    
+    return retval;
+}
 
+- (void)hadlePanFrom:(UIPanGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan) {
+        
+        CGPoint touchLocation = [recognizer locationInView:recognizer.view];
+        touchLocation = [[CCDirector sharedDirector] convertToGL:touchLocation];
+        touchLocation = [self convertToNodeSpace:touchLocation];
+    
+    } else if (recognizer.state == UIGestureRecognizerStateChanged) {
+        
+        CGPoint translation = [recognizer translationInView:recognizer.view];
+        translation = ccp(translation.x, translation.y);
+        CGPoint newPos = ccpAdd(self.position, translation);
+        self.position = [self boundLayerPos:newPos];
+        [recognizer setTranslation:CGPointZero inView:recognizer.view];
+        
+    } else if (recognizer.state == UIGestureRecognizerStateEnded) {
+
+        float scrollDuration = 0.2;
+        CGPoint velocity = [recognizer velocityInView:recognizer.view];
+        CGPoint newPos = ccpAdd(self.position, ccpMult(ccp(velocity.x, velocity.y * -1), scrollDuration));
+        newPos = [self boundLayerPos:newPos];
+        
+        [self stopAllActions];
+        CCMoveTo *moveTo = [CCMoveTo actionWithDuration:scrollDuration position:newPos];
+        [self runAction:[CCEaseInOut actionWithAction:moveTo rate:1]];
+    }
+}
+
+- (void)dealloc {
+    [super dealloc];
+}
 
 @end
